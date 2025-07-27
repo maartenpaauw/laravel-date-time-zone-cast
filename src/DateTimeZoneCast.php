@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Maartenpaauw\LaravelDateTimeZoneCast;
 
-use DateInvalidTimeZoneException;
 use DateTimeZone;
+use Exception;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Contracts\Database\Eloquent\SerializesCastableAttributes;
 use Illuminate\Database\Eloquent\Model;
@@ -21,7 +21,7 @@ final readonly class DateTimeZoneCast implements CastsAttributes, SerializesCast
     private DateTimeZone $default;
 
     /**
-     * @throws DateInvalidTimeZoneException
+     * @throws Exception
      */
     public function __construct(
         string|DateTimeZone $default = new DateTimeZone(timezone: 'UTC'),
@@ -41,7 +41,7 @@ final readonly class DateTimeZoneCast implements CastsAttributes, SerializesCast
 
         try {
             return new DateTimeZone(timezone: $value);
-        } catch (DateInvalidTimeZoneException) {
+        } catch (Exception) {
             return $this->default;
         }
     }
@@ -63,7 +63,7 @@ final readonly class DateTimeZoneCast implements CastsAttributes, SerializesCast
         if (is_string(value: $value)) {
             try {
                 return (new DateTimeZone(timezone: $value))->getName();
-            } catch (DateInvalidTimeZoneException) {
+            } catch (Exception) {
                 return $this->default->getName();
             }
         }
