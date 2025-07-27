@@ -5,15 +5,21 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/maartenpaauw/laravel-date-time-zone-cast/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/maartenpaauw/laravel-date-time-zone-cast/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/maartenpaauw/laravel-date-time-zone-cast.svg?style=flat-square)](https://packagist.org/packages/maartenpaauw/laravel-date-time-zone-cast)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+A Laravel cast that allows you to store and retrieve DateTimeZone objects in your Eloquent models. This cast
+automatically converts timezone strings (e.g. 'Europe/Amsterdam') to PHP DateTimeZone instances and vice versa when
+interacting with your database.
 
-## Support us
+## Support Me
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-date-time-zone-cast.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-date-time-zone-cast)
+<p class="filament-hidden">
+    <a href="https://filamentphp.com/plugins/maartenpaauw-model-states">
+        <img src="https://raw.githubusercontent.com/maartenpaauw/model-states-for-filament-docs/main/assets/images/model-states-for-filament-banner.jpg"
+            alt="Model States for Filament"
+            width="700px" />
+    </a>
+</p>
 
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+You can support me by [buying Model States for Filament](https://filamentphp.com/plugins/maartenpaauw-model-states).
 
 ## Installation
 
@@ -23,37 +29,47 @@ You can install the package via composer:
 composer require maartenpaauw/laravel-date-time-zone-cast
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="laravel-date-time-zone-cast-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="laravel-date-time-zone-cast-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="laravel-date-time-zone-cast-views"
-```
-
 ## Usage
 
+### 1. Add the Cast to Your Model
+
+Add the cast to your Eloquent model's `$casts` array:
+
 ```php
-$laravelDateTimeZoneCast = new Maarten Paauw\LaravelDateTimeZoneCast();
-echo $laravelDateTimeZoneCast->echoPhrase('Hello, Maarten Paauw!');
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Maartenpaauw\LaravelDateTimeZoneCast\DateTimeZoneCast;
+
+class User extends Model
+{
+    protected $casts = [
+        'timezone' => DateTimeZoneCast::class,
+    ];
+}
+```
+
+### 2. Database Schema
+
+Ensure your database column is set up to store timezone strings:
+
+```php
+Schema::table('users', function (Blueprint $table) {
+    $table->string('timezone')->nullable();
+});
+```
+
+### 3. Working with the Model
+
+```php
+$user = new User();
+$user->timezone = 'Europe/Amsterdam';
+$user->save();
+
+$timezone = $user->timezone; // DateTimeZone instance
+echo $timezone->getName(); // 'Europe/Amsterdam'
 ```
 
 ## Testing
@@ -65,14 +81,6 @@ composer test
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
 
 ## Credits
 
