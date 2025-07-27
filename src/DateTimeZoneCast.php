@@ -7,6 +7,7 @@ namespace Maartenpaauw\LaravelDateTimeZoneCast;
 use DateTimeZone;
 use Exception;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use Illuminate\Contracts\Database\Eloquent\ComparesCastableAttributes;
 use Illuminate\Contracts\Database\Eloquent\SerializesCastableAttributes;
 use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
@@ -16,7 +17,7 @@ use function is_string;
 /**
  * @implements CastsAttributes<DateTimeZone, string>
  */
-final readonly class DateTimeZoneCast implements CastsAttributes, SerializesCastableAttributes
+final readonly class DateTimeZoneCast implements CastsAttributes, ComparesCastableAttributes, SerializesCastableAttributes
 {
     private DateTimeZone $default;
 
@@ -56,7 +57,7 @@ final readonly class DateTimeZoneCast implements CastsAttributes, SerializesCast
             return $this->default->getName();
         }
 
-        if (is_object(value: $value) && is_a(object_or_class: $value, class: DateTimeZone::class)) {
+        if ($this->isDateTimeZoneInstance(value: $value)) {
             return $value->getName();
         }
 
@@ -78,5 +79,31 @@ final readonly class DateTimeZoneCast implements CastsAttributes, SerializesCast
     public function serialize(Model $model, string $key, mixed $value, array $attributes)
     {
         return $this->set(model: $model, key: $key, value: $value, attributes: $attributes);
+    }
+
+    /**
+     * @param  null|DateTimeZone|string  $firstValue
+     * @param  null|DateTimeZone|string  $secondValue
+     */
+    public function compare(Model $model, string $key, mixed $firstValue, mixed $secondValue): bool
+    {
+        if ($this->isDateTimeZoneInstance(value: $firstValue)) {
+            $firstValue = $firstValue->getName();
+        }
+
+        if ($this->isDateTimeZoneInstance(value: $secondValue)) {
+            $secondValue = $secondValue->getName();
+        }
+
+        return $firstValue === $secondValue;
+    }
+
+    /**
+     * @param  null|DateTimeZone|string  $value
+     * @phpstan-assert-if-true  DateTimeZone  $value
+     */
+    private function isDateTimeZoneInstance(mixed $value): bool
+    {
+        return is_object(value: $value) && is_a(object_or_class: $value, class: DateTimeZone::class);
     }
 }
