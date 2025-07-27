@@ -85,7 +85,7 @@ describe(description: 'SerializesCastableAttributes', tests: function (): void {
 });
 
 describe(description: 'ComparesCastableAttributes', tests: function (): void {
-    it(description: 'should compare two given date time zones', closure: function (null | string | DateTimeZone $first, null | string | DateTimeZone $second, bool $equal): void {
+    it(description: 'should compare two given date time zones', closure: function (null|string|DateTimeZone $first, null|string|DateTimeZone $second, bool $equal): void {
         expect(value: $this->cast)
             ->compare(model: $this->model, key: 'timezone', firstValue: $first, secondValue: $second)
             ->toBe(expected: $equal);

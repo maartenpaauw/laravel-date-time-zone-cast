@@ -100,6 +100,7 @@ final readonly class DateTimeZoneCast implements CastsAttributes, ComparesCastab
 
     /**
      * @param  null|DateTimeZone|string  $value
+     *
      * @phpstan-assert-if-true  DateTimeZone  $value
      */
     private function isDateTimeZoneInstance(mixed $value): bool
