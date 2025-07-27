@@ -99,5 +99,9 @@ describe(description: 'ComparesCastableAttributes', tests: function (): void {
         [new DateTimeZone(timezone: 'Europe/Amsterdam'), null, false],
         [new DateTimeZone(timezone: 'Europe/Amsterdam'), 'Europe/Amsterdam', true],
         [new DateTimeZone(timezone: 'Europe/Amsterdam'), new DateTimeZone(timezone: 'Europe/Amsterdam'), true],
+        ['America/New_York', 'Europe/London', false],
+        [new DateTimeZone(timezone: 'Europe/Amsterdam'), new DateTimeZone(timezone: 'Pacific/Auckland'), false],
+        [new DateTimeZone(timezone: 'Africa/Cairo'), 'Asia/Dubai', false],
+        ['America/Los_Angeles', new DateTimeZone(timezone: 'America/Chicago'), false],
     ]);
 });
