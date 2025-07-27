@@ -5,8 +5,8 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/maartenpaauw/laravel-date-time-zone-cast/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/maartenpaauw/laravel-date-time-zone-cast/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/maartenpaauw/laravel-date-time-zone-cast.svg?style=flat-square)](https://packagist.org/packages/maartenpaauw/laravel-date-time-zone-cast)
 
-A Laravel cast that allows you to store and retrieve DateTimeZone objects in your Eloquent models. This cast
-automatically converts timezone strings (e.g. 'Europe/Amsterdam') to PHP DateTimeZone instances and vice versa when
+A Laravel cast that allows you to store and retrieve `DateTimeZone` objects in your Eloquent models. This cast
+automatically converts timezone strings (e.g. 'Europe/Amsterdam') to PHP `DateTimeZone` instances and vice versa when
 interacting with your database.
 
 ## Support Me
