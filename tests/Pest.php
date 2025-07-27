@@ -1,5 +1,7 @@
 <?php
 
-use VendorName\Skeleton\Tests\TestCase;
+declare(strict_types=1);
 
-uses(TestCase::class)->in(__DIR__);
+use Maartenpaauw\LaravelDateTimeZoneCast\Tests\TestCase;
+
+uses(classAndTraits: TestCase::class)->in(targets: __DIR__);
