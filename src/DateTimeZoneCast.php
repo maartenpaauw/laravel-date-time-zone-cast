@@ -76,7 +76,7 @@ final readonly class DateTimeZoneCast implements CastsAttributes, ComparesCastab
      * @param  null|DateTimeZone|string  $value
      * @param  array<string, mixed>  $attributes
      */
-    public function serialize(Model $model, string $key, mixed $value, array $attributes)
+    public function serialize(Model $model, string $key, mixed $value, array $attributes): string
     {
         return $this->set(model: $model, key: $key, value: $value, attributes: $attributes);
     }
